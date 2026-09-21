@@ -42,7 +42,7 @@ const MAX_EVENTS = 60;
  * data/.admin). To set or change the PIN by hand, put the SHA-256 hex of the PIN here — on any machine:
  *   node -e "console.log(require('crypto').createHash('sha256').update('YOUR_PIN').digest('hex'))"
  * A PIN set here overrides data/.admin. */
-const ADMIN_KEY_FIXED = 'e877153ecba1c2858b9f0a8168dbf6f4eeb13c21d1f9b8d8fd814bf7d0635969';
+const ADMIN_KEY_FIXED = '96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e';
 const MAX_BYTES  = 12 * 1024 * 1024;
 const MAX_PHOTOS = 60;
 const MAX_SESSION_JSON = 4 * 1024 * 1024;
