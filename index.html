@@ -400,6 +400,9 @@ window.addEventListener("error",function(e){
     background:linear-gradient(165deg,rgba(20,26,18,.55) 0%,rgba(20,26,18,.88) 48%,var(--bg) 100%),radial-gradient(900px 520px at 70% 10%,#3a4a2e 0%,transparent 60%),var(--bg);overflow-x:hidden;overflow-y:auto}
   .landing.hidden{display:none}
   body.scroll-lock{overflow:hidden}
+  /* The admin app behind a full-screen page is wider than a phone; leaving it laid out gave the page a
+     sideways scroll. It is fully covered anyway, so take it out of the layout while a page is open. */
+  body.scroll-lock .wrap{display:none}
   .hist-page{overscroll-behavior:contain}
   .home-court{position:absolute;inset:0;pointer-events:none;opacity:.35;
     background-image:linear-gradient(90deg,transparent 0 12%,rgba(138,168,132,.18) 12% 12.4%,transparent 12.4% 87.6%,rgba(138,168,132,.18) 87.6% 88%,transparent 88%),linear-gradient(0deg,transparent 0 18%,rgba(238,244,234,.12) 18% 18.35%,transparent 18.35% 81.65%,rgba(238,244,234,.12) 81.65% 82%,transparent 82%),linear-gradient(0deg,transparent 48.5%,rgba(138,168,132,.22) 48.5% 51.5%,transparent 51.5%);
@@ -497,6 +500,7 @@ window.addEventListener("error",function(e){
   .home-adminlink:hover{opacity:1;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
   .home-adminlink[hidden]{display:none}
   .home-status b{color:var(--txt)}
+  .home-warn{display:block;margin-top:6px;font-size:.8rem;font-weight:700;color:var(--win)}
   body.light .landing{background:linear-gradient(165deg,rgba(251,250,241,.5) 0%,rgba(242,239,227,.92) 50%,var(--bg) 100%),radial-gradient(900px 520px at 70% 10%,#dcebcf 0%,transparent 60%),var(--bg)}
   body.light .home-court{opacity:.22}
   .home-court-clip{position:absolute;inset:0;overflow:hidden;pointer-events:none}   /* the court is drawn wider than the screen; never let it widen the landing scroll area */
@@ -573,6 +577,57 @@ window.addEventListener("error",function(e){
   @media(min-width:900px){.sess-grid{grid-template-columns:1.1fr .9fr}}
   .sess-block{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
   .sess-block h3{font-family:"Fraunces",Georgia,"Times New Roman",serif;font-size:1.05rem;margin:0 0 12px;font-weight:700}
+  /* live page: courts now + who's next — the player-facing, read-only view of the queue */
+  .lv-block{grid-column:1/-1}
+  .lv-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+  .lv-h h3{margin:0}
+  .lv-count{font-family:"DM Sans",system-ui,sans-serif;font-size:.74rem;font-weight:600;color:var(--muted)}
+  .lv-courts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
+  .lv-court{border:1px solid var(--line);border-radius:14px;padding:10px 12px 11px;background:var(--panel-2);display:flex;flex-direction:column;gap:9px;min-width:0}
+  .lv-court.live{border-color:var(--int)}
+  .lv-court.open{border-style:dashed}
+  .lv-ch{display:flex;align-items:center;gap:7px;min-width:0}
+  .lv-ch b{font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lv-ch .timer{margin-left:auto;font-size:.8rem;padding:2px 8px}
+  .lv-when{margin-left:auto;font-size:.58rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  /* the matchup: two teams facing each other, same team colours as the queue below */
+  .lv-match{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
+  .lv-side{display:flex;flex-direction:column;gap:3px;min-width:0;padding:6px 9px;border-radius:9px;
+    background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent)}
+  .lv-side.b{border-left-color:var(--int)}
+  .lv-n{font-weight:600;font-size:.88rem;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lv-court.open .lv-side{background:transparent;opacity:.75}
+  .lv-wait{padding:10px 0;text-align:center;color:var(--muted);font-size:.85rem}
+  .lv-vs{font-size:.55rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);text-align:center}
+  .lv-queue{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(198px,1fr));margin-top:10px;align-items:start}
+  .lvg{display:flex;flex-direction:column;gap:5px;border:1px solid var(--line);border-radius:12px;padding:8px;background:rgba(255,255,255,.02);min-width:0}
+  body.light .lvg{background:rgba(0,0,0,.025)}
+  .lvg.next{border-color:var(--accent);background:rgba(138,168,132,.10)}
+  .lvg.later{opacity:.72}
+  .lvg.leftover{border-style:dashed;opacity:.72}
+  .lvg-h{display:flex;align-items:center;gap:6px;padding:0 2px 1px}
+  .lvg-t{font-size:.6rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+  .lvg.next .lvg-t{color:var(--accent)}
+  .lvg-note{margin-left:auto;font-size:.58rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+  .lv-fixed{margin-left:auto;font-size:.55rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:2px 7px;border-radius:999px;background:var(--accent);color:var(--ink)}
+  .lvt{display:flex;flex-direction:column;gap:4px;padding:5px;border-radius:9px;border-left:3px solid var(--accent);background:rgba(255,255,255,.02)}
+  .lvt.b{border-left-color:var(--int)}
+  body.light .lvt{background:rgba(0,0,0,.025)}
+  .lvq{display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:8px;background:var(--panel-2);border:1px solid var(--line);min-width:0}
+  .lvq .qnum{width:20px;height:20px;border-radius:6px;font-size:.66rem}
+  .lvq-n{flex:1;min-width:0;font-weight:600;font-size:.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lvq .qgms,.lvq .qwait{font-size:.63rem}
+  .lv-you{margin:0 0 10px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel-2);font-size:.9rem;font-weight:600;line-height:1.4}
+  .lv-you.hot{border-color:var(--accent);background:rgba(138,168,132,.14)}
+  .lv-you.miss{color:var(--muted);font-weight:500}
+  .lv-block.finding [data-lvname]{opacity:.3}
+  .lv-block.finding [data-lvname].hit{opacity:1;outline:2px solid var(--accent);outline-offset:-1px}
+  .lv-note{margin:12px 0 0}
+  @media(max-width:560px){
+    .lv-courts{grid-template-columns:1fr}
+    .lv-queue{grid-template-columns:1fr}
+    .lvq-n{font-size:.92rem}
+  }
   .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
   .photo-cell{position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--panel-2);cursor:zoom-in;padding:0}
   .photo-cell img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
@@ -929,7 +984,7 @@ window.addEventListener("error",function(e){
 const KEY="dd_queue_v1";
 let state=migrate(load())||fresh();
 /* ---------- admin PIN + photos ---------- */
-const APP_BUILD="dd-2026-09-21b";                              // hover the header logo to check which copy the browser loaded
+const APP_BUILD="dd-2026-09-21e";                              // hover the header logo to check which copy the browser loaded
 const PIN_KEY="dd_admin_pin_v1";
 const ADMIN_OK="dd_admin_ok";
 let pinMode="unlock";
@@ -999,7 +1054,7 @@ async function pinMatches(pin){
 const API="api.php", DATA_URL="data/openplays.json";
 const ADMIN_KEY="dd_admin_key";                              // SHA-256 of the PIN, kept for this tab only
 const PUBLISHED_KEY="dd_published_v1";                       // ids this browser knows are on the website
-const server={ on:false, pin:false, loaded:false };
+const server={ on:false, pin:false, loaded:false, live:false };   // live: the website carries the running open play too
 let lastPublished={};                                        // id -> JSON of what the website holds (minus photos)
 let publishTimers={};
 function publishedIds(){ try{ return new Set(JSON.parse(localStorage.getItem(PUBLISHED_KEY)||"[]")); }catch(_){ return new Set(); } }
@@ -1026,6 +1081,7 @@ const serverReady=(async()=>{
   }catch(e){ console.warn("api.php not reachable — running in this browser only", e); return; }
   const fn=$("footNote"); if(fn) fn.textContent="Open play history and photos are saved on the website · live queue runs on this device";
   loadUpcoming();
+  await pullLive();
   await pullHistory();
 })();
 /* Merge the website's list into state.history. The website wins for anything it has; open plays that only
@@ -1065,6 +1121,118 @@ async function publishSession(id, js){
     if(s && Array.isArray(j.photos)){ s.photos=j.photos; localStorage.setItem(KEY,JSON.stringify(state)); }
     return true;
   }catch(e){ console.warn(e); toast("Could not reach the website — will retry on the next change"); return false; }
+}
+
+/* ---------- live open play sync (api.php?action=live / saveLive) ----------
+   The running open play — roster, queue, courts, games, log — is one shared record on the website
+   (data/live.json), so several admin devices can run the same session and everyone else can watch it.
+   Every save() pushes the shared part of the state (debounced); every device polls for a newer version and
+   redraws when one arrives. Each push says which version it was based on; if another device got there first
+   the website refuses it, this device takes the newer copy and asks the admin to redo that one action.
+   Only what belongs to this device stays local: theme, panel sizes, sort order, the audit trail, and the
+   history list (which has its own sync above). Without api.php everything stays in this browser as before. */
+const LIVE_LOCAL_KEYS=["theme","layout","secOpen","sort","history","audit"];
+const live={ version:0, json:"", pushing:false, dirty:false, timer:null, pollTimer:null };
+function liveShared(){ const o={}; for(const k of Object.keys(state)) if(!LIVE_LOCAL_KEYS.includes(k)) o[k]=state[k]; return o; }
+function liveJson(){ return JSON.stringify(liveShared()); }
+function canPushLive(){ return server.on && server.live && isAdmin() && !!adminKey(); }
+/* Is the running open play reaching the website, or only this device? "unshared" is the one that bites:
+   the open play runs here, the website could carry it, but nobody is logged in here to publish it, so
+   phones see nothing. */
+function liveShareState(){
+  if(!(state.session&&state.session.active)) return "none";
+  if(!server.live) return "local";
+  if(live.version>0) return "shared";
+  return canPushLive() ? "sharing" : "unshared";
+}
+/* Called from save(): if the shared part of the state changed, push it shortly. */
+function liveSync(){
+  if(!canPushLive()) return;
+  if(liveJson()===live.json) return;
+  live.dirty=true;
+  clearTimeout(live.timer); live.timer=setTimeout(pushLive, 250);
+}
+async function pushLive(){
+  if(!canPushLive()) return;
+  if(live.pushing){ live.dirty=true; return; }
+  const js=liveJson(); if(js===live.json){ live.dirty=false; return; }
+  live.pushing=true; live.dirty=false;
+  try{
+    const j=await api("saveLive",{base:live.version,state:js});
+    if(j.ok){
+      const seeded=live.version===0 && j.version===1;      // first push of the night: say so, it is easy to miss
+      live.version=j.version; live.json=js;
+      if(seeded && state.session && state.session.active) toast("Live open play is now shared — anyone can follow it on the website");
+    }
+    else if(j.conflict){
+      const theirs=j.state?JSON.stringify(j.state):"";
+      if(theirs===js){ live.version=j.version; live.json=js; }       // our earlier push did land; the reply just got lost
+      else applyLive(j, "Another device changed the open play first — showing the latest. Please redo your last action.");
+    }
+    else toast(j.error||"Could not save the live open play to the website");
+  }catch(e){
+    console.warn(e); toast("Could not reach the website — will retry the live update");
+    clearTimeout(live.timer); live.timer=setTimeout(pushLive, 4000);
+  }finally{
+    live.pushing=false;
+    if(live.dirty) pushLive();                                          // a change came in while this one was in flight
+  }
+}
+/* Take the website's copy of the live open play and redraw whatever is on screen. */
+function applyLive(j, msg){
+  if(!j||typeof j.version!=="number"||!j.state||typeof j.state!=="object") return false;
+  const remote=j.state;
+  const wasActive=!!(state.session&&state.session.active), oldId=state.session?state.session.id:null;
+  const rs=remote.session||{};
+  if(wasActive && (!rs.active || rs.id!==oldId)){                      // a different session is replacing a running one: keep a copy, just in case
+    try{ localStorage.setItem(KEY+"_bak", JSON.stringify(state)); }catch(_){}
+  }
+  for(const k of Object.keys(state)) if(!LIVE_LOCAL_KEYS.includes(k) && !(k in remote)) delete state[k];
+  for(const k of Object.keys(remote)) if(!LIVE_LOCAL_KEYS.includes(k)) state[k]=remote[k];
+  state=migrate(state); ensureCourts();
+  live.version=j.version; live.json=liveJson();
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(_){}
+  selSwap=null; selPair=null;
+  render(); syncAdminUI(); syncTierToggle();
+  const sel=$("sortSel"); if(sel) sel.value=state.sort;
+  const sm=$("setupModal"); if(sm&&!sm.classList.contains("hidden")) renderSetup();
+  const land=$("landing"); if(land&&!land.classList.contains("hidden")) showLanding();
+  refreshHistoryViews();                                               // the live session page, if someone is watching it
+  const nowActive=!!(state.session&&state.session.active);
+  if(msg) toast(msg);
+  else if(wasActive&&!nowActive){ toast("Open play was ended on another device"); pullHistory(); }
+  else if(!wasActive&&nowActive) toast("Open play started on another device");
+  return true;
+}
+async function pollLive(){
+  if(!server.on||!server.live) return;
+  if(live.pushing||live.dirty||document.visibilityState==="hidden") return;
+  try{
+    const r=await fetch(API+"?action=live&v="+live.version+"&t="+Date.now(),{cache:"no-store"});
+    const j=await r.json();
+    if(!j||j.same) return;
+    if(live.pushing||live.dirty) return;                               // we changed something meanwhile; the push will reconcile
+    if(typeof j.version==="number" && j.version>live.version && j.state) applyLive(j);
+  }catch(e){ /* offline for a moment — next tick tries again */ }
+}
+function schedulePoll(){
+  clearTimeout(live.pollTimer);
+  live.pollTimer=setTimeout(async()=>{ await pollLive(); schedulePoll(); }, isAdmin()?2500:5000);
+}
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible") pollLive(); });
+/* First contact with the website: take its live open play, or seed it from this device if it has none yet. */
+async function pullLive(){
+  try{
+    const r=await fetch(API+"?action=live&t="+Date.now(),{cache:"no-store"});
+    const j=await r.json();
+    if(!j||typeof j.version!=="number"){ console.warn("live sync is not available on this server"); return false; }
+    server.live=true;
+    if(j.version>0 && j.state) applyLive(j);
+    else { live.version=j.version||0; live.json=""; liveSync(); }
+    const fn=$("footNote"); if(fn) fn.textContent="Open play history, photos and the live open play are shared on the website";
+    schedulePoll();
+    return true;
+  }catch(e){ console.warn("could not read the live open play", e); return false; }
 }
 function hasAdminPin(){ return server.on ? server.pin : !!localStorage.getItem(PIN_KEY); }
 function openPinModal(mode){
@@ -1110,6 +1278,7 @@ async function submitPin(){
       setAdmin(true); closePinModal(true); render(); refreshHistoryViews();
       toast(created?"Admin PIN saved on the website — you're logged in":"Admin unlocked");
       historySync();                                     // push anything that was waiting for an admin
+      liveSync();                                        // and seed the live open play if the website has none yet
       return;
     }
     if(pinMode==="create"){
@@ -1208,7 +1377,7 @@ function migrate(s){ if(!s)return null; if(!Array.isArray(s.queue))s.queue=[];
   return s; }
 function ensureCourts(){ if(!state.courts.length){ addCourt(); addCourt(); addCourt(); } }
 function load(){ try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null} }
-function save(){ localStorage.setItem(KEY,JSON.stringify(state)); try{ historySync(); }catch(e){ console.warn(e); } }
+function save(){ localStorage.setItem(KEY,JSON.stringify(state)); try{ historySync(); }catch(e){ console.warn(e); } try{ liveSync(); }catch(e){ console.warn(e); } }
 function commit(){
   selSwap=null; selPair=null; try{ pinFront(); }catch(e){} save(); render();
   const sp=$("sessionPage");
@@ -1676,7 +1845,16 @@ function showLanding(){
     histBtn.textContent=live?"Past open plays":"Open play history";
     histBtn.className=live?"btn btn-sm":"btn-accent";
   }
-  if(r){ r.hidden=!live; r.innerHTML = live ? ("● Live now — <b>"+esc(state.session.name||"Open play")+"</b>") : ""; }   // only the live notice; the count was noise
+  if(r){
+    // Say what is happening. Silence here reads as "the feature is missing" on a phone that has no session of its own.
+    if(live){
+      const warn = liveShareState()==="unshared"
+        ? '<span class="home-warn">Only on this device — log in as admin to share it</span>' : "";
+      r.hidden=false; r.innerHTML="● Live now — <b>"+esc(state.session.name||"Open play")+"</b>"+warn;
+    } else if(server.live){
+      r.hidden=false; r.innerHTML="No open play running right now.";
+    } else { r.hidden=true; r.innerHTML=""; }
+  }
   const tb=$("homeThemeBtn"); if(tb) tb.textContent=state.theme==="light"?"☀️":"🌙";
   renderUpcoming();
   syncAdminUI();
@@ -2100,6 +2278,85 @@ function openSessionPage(id){
   renderSessionPage(id);
   syncAdminUI();
 }
+/* ---------- live page: courts now + who's next ----------
+   Players watching on their phones want one answer: am I next? Next up is the fixed four who take the next
+   open court. The group after that is the likely matchup; further back the line-up can still re-level. */
+let lvWhere={};   // lowercased name -> where that player stands right now, for the find-your-name answer
+function lvRow(id,num){
+  const p=P(id); if(!p) return "";
+  const games=p.games?`<span class="qgms" title="Games played">${p.games}g</span>`:"";
+  return `<div class="lvq" data-lvname="${esc(p.name.toLowerCase())}"><span class="qnum">${num}</span><span class="lvq-n">${esc(p.name)}</span>${p.partner?'<span class="grpm" title="Fixed pair">🔗</span>':''}${games}${waitSpan(id)}</div>`;
+}
+function liveQueueBlock(){
+  lvWhere={};
+  const {groups,leftovers}=queueGroups();
+  const preview=groups.slice();                       // each open court gets the next group, as the admin view does
+  const courts=state.courts.map((c,idx)=>{
+    const active=c.seats.every(x=>x);
+    const name=esc(c.name||('Court '+(idx+1)));
+    // One shape for every court: two teams facing each other. Team colours match the queue below.
+    const side=(a,b,cls)=>`<div class="lv-side${cls}">${[a,b].map(id=>`<span class="lv-n" data-lvname="${esc(nm(id).toLowerCase())}">${esc(nm(id))}</span>`).join("")}</div>`;
+    const match=ids=>`<div class="lv-match">${side(ids[0],ids[1],"")}<span class="lv-vs">vs</span>${side(ids[2],ids[3]," b")}</div>`;
+    if(!active){
+      const g=preview.shift();
+      const first=preview.length===groups.length-1;
+      return `<div class="lv-court open"><div class="lv-ch"><b>${name}</b><span class="badge open">Open</span>${g?`<span class="lv-when">${first?"Starting next":"After that"}</span>`:""}</div>`
+        + (g?match(g):`<div class="lv-wait">Waiting for 4 players</div>`) + `</div>`;
+    }
+    c.seats.forEach(id=>{ if(P(id)) lvWhere[P(id).name.toLowerCase()]={kind:"court",court:c.name||('Court '+(idx+1))}; });
+    return `<div class="lv-court live"><div class="lv-ch"><b>${name}</b><span class="badge live">Live</span><span class="timer" data-timer="${c.started||''}">${c.started?fmt(Date.now()-c.started):'—:—'}</span></div>${match(c.seats)}</div>`;
+  }).join("");
+  const openCourts=state.courts.filter(c=>!c.seats.every(x=>x)).length;
+  let n=0, qhtml="";
+  groups.forEach((g,gi)=>{
+    const tag=gi===0?'▶ Next up':gi===1?'Up after that':'Later · '+(gi+1);
+    g.forEach(id=>{ if(P(id)) lvWhere[P(id).name.toLowerCase()]={kind:"group",gi,pos:state.queue.indexOf(id)+1}; });
+    qhtml+=`<div class="lvg ${gi===0?'next':gi>1?'later':''}"><div class="lvg-h"><span class="lvg-t">${tag}</span>${gi===0?'<span class="lv-fixed">Fixed</span>':gi===1?'<span class="lvg-note">likely</span>':''}</div>
+      <div class="lvt">${lvRow(g[0],++n)}${lvRow(g[1],++n)}</div><div class="lv-vs">vs</div><div class="lvt b">${lvRow(g[2],++n)}${lvRow(g[3],++n)}</div></div>`;
+  });
+  if(leftovers.length){
+    leftovers.forEach(id=>{ if(P(id)) lvWhere[P(id).name.toLowerCase()]={kind:"leftover"}; });
+    qhtml+=`<div class="lvg leftover"><div class="lvg-h"><span class="lvg-t">Waiting for a match</span></div>${leftovers.map(id=>lvRow(id,'·')).join("")}</div>`;
+  }
+  if(!groups.length&&!leftovers.length) qhtml='<div class="hint">Nobody is waiting right now.</div>';
+  const note=groups.length>1 ? `Next up is fixed — those four take the next open court${openCourts?" now":""}. The groups after are the likely line-up and can still change as games end.` : "";
+  return `<div class="sess-block lv-block"><div class="lv-h"><h3>🏟️ On the courts</h3></div><div class="lv-courts">${courts||'<div class="hint">No courts set up yet.</div>'}</div>
+    <div class="lv-h" style="margin-top:20px"><h3>⏭ Who's next</h3><span class="lv-count">${state.queue.length} waiting</span></div>
+    <input class="rsearch" data-qfind placeholder="🔍 Find your name…" autocomplete="off" aria-label="Find your name in the queue">
+    <div class="lv-you" data-qanswer hidden></div>
+    <div class="lv-queue">${qhtml}</div>
+    ${note?`<p class="hint lv-note">${note}</p>`:""}</div>`;
+}
+/* Typing a name dims everyone else and, for a single match, answers the only question that matters: am I next? */
+function lvFind(inp){
+  const q=(inp.value||"").trim().toLowerCase();
+  const block=inp.closest(".lv-block"); if(!block) return;
+  block.classList.toggle("finding",!!q);
+  let first=null;
+  const hits=[];
+  block.querySelectorAll("[data-lvname]").forEach(el=>{
+    const hit=!!q && el.dataset.lvname.includes(q);
+    el.classList.toggle("hit",hit);
+    if(hit){ if(!first) first=el; if(!hits.includes(el.dataset.lvname)) hits.push(el.dataset.lvname); }
+  });
+  const box=block.querySelector("[data-qanswer]");
+  if(box){
+    if(!q||!hits.length){ box.hidden=true; box.textContent=q?"No one in this open play matches that name.":""; box.hidden=!q; box.className="lv-you"+(q?" miss":""); }
+    else if(hits.length>1){ box.hidden=false; box.className="lv-you"; box.textContent=hits.length+" players match — type a bit more of the name."; }
+    else{
+      const w=lvWhere[hits[0]]||{};
+      const who=(first&&first.closest(".lvq")?first.querySelector(".lvq-n").textContent:first?first.textContent:"You");
+      let msg;
+      if(w.kind==="court") msg=`🎾 ${who} is playing right now on ${w.court}.`;
+      else if(w.kind==="group"&&w.gi===0) msg=`▶ ${who} is in Next up — on the next open court.`;
+      else if(w.kind==="group") msg=`⏳ ${who} is #${w.pos} in line — ${w.gi} group${w.gi===1?"":"s"} ahead.`;
+      else if(w.kind==="leftover") msg=`⏳ ${who} is waiting for a matching group to form.`;
+      else msg=`${who} is not in the queue right now.`;
+      box.hidden=false; box.className="lv-you"+(w.kind==="group"&&w.gi===0?" hot":""); box.textContent=msg;
+    }
+  }
+  if(first) try{ first.scrollIntoView({block:"nearest",behavior:"smooth"}); }catch(_){}
+}
 async function renderSessionPage(id){
   let s=null, live=false;
   if(String(id)==="live"){
@@ -2123,7 +2380,7 @@ async function renderSessionPage(id){
   }
   document.title="Dink Donk · "+(s.name||fmtDate(s.endedAt));
   const del=$("sessDelete"); if(del){ del.dataset.delhist=live?"":String(s.id); del.hidden=!!live; del.style.display=live?"none":""; }
-  const cont=$("sessContinue"); if(cont) cont.hidden=!live;
+  const cont=$("sessContinue"); if(cont) cont.hidden=!(live&&isAdmin());   // visitors watch; only admins continue
   const champ=s.players&&s.players[0];
   const log=s.log||[];
   const showLvl=isAdmin();
@@ -2147,8 +2404,12 @@ async function renderSessionPage(id){
     ? ""
     : '<div class="sess-block"><h3>📷 Photos</h3><div class="photo-grid">'+photoHtml+addBtn+'</div></div>';
   $("sessBody").innerHTML=
-    '<div class="sess-hero"><p>'+(live?'<span class="htag live">Live</span> In progress · ':"")+(!live?fmtDate(s.endedAt)+' · ':"")+(s.games||0)+' games'+(s.endedAt&&s.startedAt?" · "+fmtDur(s.endedAt-s.startedAt):"")+(champ?" · 🏆 "+esc(champ.name):"")+'</p></div>'+
+    '<div class="sess-hero"><p>'+(live?'<span class="htag live">Live</span> In progress · ':"")+(!live?fmtDate(s.endedAt)+' · ':"")+(s.games||0)+' game'+((s.games||0)===1?'':'s')+(s.endedAt&&s.startedAt?" · "+fmtDur(s.endedAt-s.startedAt):"")+(live?" · "+state.queue.length+" waiting":"")+(champ?" · 🏆 "+esc(champ.name):"")+'</p></div>'+
     '<div class="sess-grid">'+
+      ((live && liveShareState()==="unshared")
+        ? '<div class="sess-warn"><span><b>This open play is only on this device.</b> Log in as admin here and it is published to the website, so anyone can follow the courts and the queue on their phone.</span></div>'
+        : '')+
+      (live?liveQueueBlock():'')+
       ((!live && isAdmin() && sessionMismatch(s))
         ? '<div class="sess-warn"><span><b>Standings and game log disagree.</b> '+sessionMismatch(s)+' player'+(sessionMismatch(s)===1?"'s record does":"s\' records do")+' not match the games recorded below.</span><button class="btn btn-sm" data-fixstand="'+esc(String(s.id))+'" style="margin-left:auto">Rebuild from game log</button></div>'
         : '')+
@@ -2446,8 +2707,10 @@ async function refreshHistoryViews(){
   const sp=$("sessionPage"), hp=$("historyPage");
   if(sp&&!sp.classList.contains("hidden")&&viewingSessionId!=null){
     const box=sp.querySelector("[data-logfilter]"), keep=box?box.value:"";
+    const fbox=sp.querySelector("[data-qfind]"), keepFind=fbox?fbox.value:"";
     await renderSessionPage(viewingSessionId);
     if(keep){ const b2=sp.querySelector("[data-logfilter]"); if(b2){ b2.value=keep; filterLogRows(b2); } }
+    if(keepFind){ const f2=sp.querySelector("[data-qfind]"); if(f2){ f2.value=keepFind; lvFind(f2); } }
   } else if(hp&&!hp.classList.contains("hidden")) renderHistory();
 }
 function geTeam(key,label){
@@ -2759,7 +3022,7 @@ if($("tierToggle")) $("tierToggle").addEventListener("click",()=>{
 function syncTierToggle(){ const b=$("tierToggle"); if(b) b.textContent=state.hideTiers?"Show categories":"Hide categories"; }
 syncTierToggle();
 $("rSearch").addEventListener("input",e=>{rosterSearch=e.target.value.trim().toLowerCase();renderRoster();});
-document.body.addEventListener("input",e=>{ const t=e.target.closest("[data-logfilter]"); if(t) filterLogRows(t); });
+document.body.addEventListener("input",e=>{ const t=e.target.closest("[data-logfilter]"); if(t) filterLogRows(t); const f=e.target.closest("[data-qfind]"); if(f) lvFind(f); });
 document.body.addEventListener("keydown",e=>{
   if(e.key!=="Escape") return;
   if(geIdx!==null){ closeGameEdit(); return; }
