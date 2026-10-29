@@ -1,13 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Dink Donk Pickleball Club">
-  <!-- Cream pickleball on the club's court green. Used for small brand marks and the favicon. -->
-  <circle cx="32" cy="32" r="32" fill="#2f4a2f"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="JV's Open Play">
+  <!-- Green pickleball on black, with cyan motion streaks — the motif from the club logo.
+       Used for small brand marks and the favicon. -->
+  <circle cx="32" cy="32" r="32" fill="#101314"/>
   <g transform="translate(6 0)">
-    <path d="M2 27 h9" stroke="#efe9d8" stroke-width="2.4" stroke-linecap="round" opacity=".9"/>
-    <path d="M0 33 h7" stroke="#efe9d8" stroke-width="2.4" stroke-linecap="round" opacity=".65"/>
-    <path d="M3 39 h6" stroke="#efe9d8" stroke-width="2.4" stroke-linecap="round" opacity=".4"/>
+    <path d="M2 27 h9" stroke="#29b2e3" stroke-width="2.4" stroke-linecap="round" opacity=".95"/>
+    <path d="M0 33 h7" stroke="#29b2e3" stroke-width="2.4" stroke-linecap="round" opacity=".7"/>
+    <path d="M3 39 h6" stroke="#86c743" stroke-width="2.4" stroke-linecap="round" opacity=".55"/>
   </g>
-  <circle cx="36" cy="32" r="16.5" fill="#efe9d8"/>
-  <g fill="#2f4a2f">
+  <circle cx="36" cy="32" r="16.5" fill="#86c743"/>
+  <g fill="#101314">
     <circle cx="36" cy="24" r="2.1"/>
     <circle cx="29" cy="28.5" r="2.1"/>
     <circle cx="43" cy="28.5" r="2.1"/>

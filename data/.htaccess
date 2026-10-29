@@ -1,4 +1,4 @@
-# Dink Donk Pickleball Club — published data. Read-only for the web; api.php is the only writer.
+# JV's Open Play — published data. Read-only for the web; api.php is the only writer.
 Options -Indexes
 <FilesMatch "\.(php|phtml|php[0-9]|phar|cgi|pl|py|sh)$">
   Require all denied

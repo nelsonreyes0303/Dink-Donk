@@ -1,4 +1,4 @@
-# Dink Donk Pickleball Club — always serve the freshest HTML (no stale cached copies)
+# JV's Open Play — always serve the freshest HTML (no stale cached copies)
 <IfModule mod_headers.c>
   <FilesMatch "\.(html|htm)$">
     Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"

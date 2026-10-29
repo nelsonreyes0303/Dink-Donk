@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<title>Dink Donk Pickleball Club</title>
+<title>JV's Open Play</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght,SOFT@9..144,500..700,50&display=swap" rel="stylesheet">
@@ -28,7 +28,7 @@ window.addEventListener("error",function(e){
 </script>
 <style>
   :root{
-    /* DARK — court green and cream (Dink Donk palette) */
+    /* DARK — court green and cream (JV's Open Play palette) */
     --bg:#13201a; --bg2:#22402c; --panel:#1a2b21; --panel-2:#22362a; --line:#34503f;
     --txt:#efe9d8; --muted:#a9b9a3;
     --beg:#5fb3e6; --beg-soft:#123040;
@@ -417,7 +417,7 @@ window.addEventListener("error",function(e){
   .home-top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px clamp(18px,4vw,40px)}
   .home-brandmark{display:flex;align-items:center;gap:9px;font-weight:800;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
   .marklogo{width:26px;height:26px;border-radius:50%;object-fit:cover;flex:none}
-  .home-banner{width:min(560px,92vw)!important;height:auto;border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .home-banner{width:clamp(150px,26vh,260px)!important;height:auto;border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--line)}
   .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   .home-lead b{color:var(--txt)}
   .home-logo{width:clamp(96px,17vh,178px);height:auto;margin:0 0 clamp(10px,2vh,22px);
@@ -713,7 +713,7 @@ window.addEventListener("error",function(e){
 </head>
 <body>
 <header>
-  <div class="brand" id="brandMark"><img src="mark.svg" alt="" class="brandlogo"><div>Dink Donk Pickleball Club<small>Your queue · you control the order</small></div></div>
+  <div class="brand" id="brandMark"><img src="mark.svg" alt="" class="brandlogo"><div>JV's Open Play<small>Your queue · you control the order</small></div></div>
   <div class="spacer"></div>
   <div class="app-nav">
     <button type="button" class="navlink tool-extra" id="navHomeBtn">Club home</button>
@@ -802,15 +802,15 @@ window.addEventListener("error",function(e){
 <div id="landing" class="landing hidden">
   <div class="home-court-clip" aria-hidden="true"><div class="home-court"></div></div>
   <div class="home-top">
-    <div class="home-brandmark"><img src="mark.svg" alt="" class="marklogo">Dink Donk</div>
+    <div class="home-brandmark"><img src="mark.svg" alt="" class="marklogo">JV's Open Play</div>
     <div style="display:flex;align-items:center;gap:8px">
       <button type="button" class="btn-ghost btn-sm admin-only" id="landLockBtn" title="Lock admin on this device">Log out</button>
       <button type="button" class="btn btn-sm" id="homeThemeBtn" title="Toggle theme">🌙</button>
     </div>
   </div>
   <div class="home-hero">
-    <img src="logo.webp" alt="Dink Donk Pickleball Club" class="home-logo home-banner">
-    <h1 class="sr-only">Dink Donk Pickleball Club</h1>
+    <img src="logo.webp" alt="JV's Open Play" class="home-logo home-banner">
+    <h1 class="sr-only">JV's Open Play</h1>
     <p class="home-lead"><b>Good dinks. Great donks.</b> Open play nights, standings, and the moments between games — all in one place.</p>
     <div class="home-ctas">
       <button type="button" class="btn-accent" id="landingLive" hidden>View live open play</button>
@@ -866,7 +866,7 @@ window.addEventListener("error",function(e){
 
 <div id="historyPage" class="hist-page hidden">
   <div class="page-bar">
-    <button type="button" class="page-brand" data-gohome title="Club home"><img src="mark.svg" alt="" class="marklogo">Dink Donk</button>
+    <button type="button" class="page-brand" data-gohome title="Club home"><img src="mark.svg" alt="" class="marklogo">JV's Open Play</button>
     <span class="sep" aria-hidden="true"></span>
     <h1>Open play history</h1>
     <div class="spacer"></div>
@@ -887,7 +887,7 @@ window.addEventListener("error",function(e){
 
 <div id="sessionPage" class="hist-page hidden">
   <div class="page-bar">
-    <button type="button" class="page-brand" data-gohome title="Club home"><img src="mark.svg" alt="" class="marklogo">Dink Donk</button>
+    <button type="button" class="page-brand" data-gohome title="Club home"><img src="mark.svg" alt="" class="marklogo">JV's Open Play</button>
     <span class="sep" aria-hidden="true"></span>
     <button type="button" class="btn-ghost btn-sm" id="sessBackBtn">← All open plays</button>
     <div class="spacer"></div>
@@ -996,7 +996,7 @@ window.addEventListener("error",function(e){
 const KEY="dd_queue_v1";
 let state=migrate(load())||fresh();
 /* ---------- admin PIN + photos ---------- */
-const APP_BUILD="dd-2026-10-07a";                              // hover the header logo to check which copy the browser loaded
+const APP_BUILD="jv-2026-10-29a";                              // hover the header logo to check which copy the browser loaded
 const PIN_KEY="dd_admin_pin_v1";
 const ADMIN_OK="dd_admin_ok";
 let pinMode="unlock";
@@ -1884,7 +1884,7 @@ function standings(){
     .sort((a,b)=> b.wins-a.wins || (b.games?b.wins/b.games:0)-(a.games?a.wins/a.games:0) || b.games-a.games || a.name.localeCompare(b.name));
 }
 function showLanding(){
-  document.title="Dink Donk Pickleball Club";
+  document.title="JV's Open Play";
   hideHistoryPages();
   const l=$("landing"); if(!l)return; l.classList.remove("hidden");
   const r=$("landingRoster");
@@ -1977,7 +1977,7 @@ function startMixedGame(c){                       // escape hatch: play stranded
   c.seats=[g[0],g[1],g[2],g[3]]; c.started=Date.now(); commit(); toast("Mixed-tier game started");
 }
 function openHistory(){
-  document.title="Dink Donk Pickleball Club";
+  document.title="JV's Open Play";
   hideLanding();
   const sp=$("sessionPage"); if(sp) sp.classList.add("hidden");
   const hp=$("historyPage"); if(!hp){ toast("History page missing"); return; }
@@ -2017,7 +2017,7 @@ function exportSession(id){
   let csv="Rank,Player,Level,Games,Wins,Losses,Win %\n";
   s.players.forEach((p,i)=>{ csv+=[i+1,csvq(p.name),p.level||"",p.games,p.wins,p.losses,(p.games?Math.round(p.wins/p.games*100):0)+"%"].join(",")+"\n"; });
   const blob=new Blob([csv],{type:"text/csv"}), url=URL.createObjectURL(blob), a=document.createElement("a");
-  a.href=url; a.download="dink-donk-pickleball-openplay-"+new Date(s.endedAt).toISOString().slice(0,10)+".csv"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  a.href=url; a.download="jvs-openplay-"+new Date(s.endedAt).toISOString().slice(0,10)+".csv"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 }
 function exportAudit(){
   const a=state.audit||[];
@@ -2025,7 +2025,7 @@ function exportAudit(){
   let csv="#,Time,Action,Detail,Queue order after\n";
   a.forEach((e,i)=>{ csv+=[i+1,csvq(new Date(e.t).toLocaleString()),csvq(e.a),csvq(e.d||""),csvq(e.q||"")].join(",")+"\n"; });
   const blob=new Blob([csv],{type:"text/csv"}), url=URL.createObjectURL(blob), dl=document.createElement("a");
-  dl.href=url; dl.download="dink-donk-pickleball-audit-"+new Date().toISOString().slice(0,10)+".csv";
+  dl.href=url; dl.download="jvs-audit-"+new Date().toISOString().slice(0,10)+".csv";
   document.body.appendChild(dl); dl.click(); dl.remove(); URL.revokeObjectURL(url);
   toast(a.length+" actions exported");
 }
@@ -2033,7 +2033,8 @@ function exportAudit(){
    Backup writes one JSON file: the whole state plus every photo as a data URL. Import reads it back.
    On the website an import publishes each open play and its photos through api.php, so the file made
    from a local copy of the app becomes the official record; offline it restores into this browser. */
-const BACKUP_TAG="dink-donk-pickleball-backup";
+const BACKUP_TAG="jvs-open-play-backup";
+const BACKUP_TAGS_OK=[BACKUP_TAG,"dink-donk-pickleball-backup"];   // files exported under the old club name still import
 function blobToDataUrl(b){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=()=>rej(r.error); r.readAsDataURL(b); }); }
 async function photoBlob(ph){
   if(ph && typeof ph==="object"){ const r=await fetch(ph.url); if(!r.ok) throw new Error("photo missing"); return r.blob(); }
@@ -2060,7 +2061,7 @@ async function importBackup(file){
   if(!file) return;
   let data=null;
   try{ data=JSON.parse(await file.text()); }catch(e){ toast("That file isn't a valid backup"); return; }
-  if(!data||data.app!==BACKUP_TAG||!data.state||typeof data.state!=="object"){ toast("That file isn't a Dink Donk backup"); return; }
+  if(!data||!BACKUP_TAGS_OK.includes(data.app)||!data.state||typeof data.state!=="object"){ toast("That file isn't a JV's Open Play backup"); return; }
   const hist=data.state.history||[], roster=Object.keys(data.state.players||{}).length, shots=(data.photos||[]).length;
   const summary=hist.length+" open play"+(hist.length===1?"":"s")+", "+roster+" player"+(roster===1?"":"s")+", "+shots+" photo"+(shots===1?"":"s")
     +"\nfrom "+(data.exportedAt?new Date(data.exportedAt).toLocaleString():"unknown date");
@@ -2242,7 +2243,7 @@ function openUpModal(ev){
   upEditing=ev||null;
   const last=upcomingAll[upcomingAll.length-1];
   $("upModalTitle").textContent=ev?"Edit open play":"Add open play";
-  $("upName").value=ev?(ev.title||""):(last&&last.title||"Dink Donk OP - All Levels");
+  $("upName").value=ev?(ev.title||""):(last&&last.title||"JV's Open Play - All Levels");
   $("upDate").value=ev?(ev.start||"").slice(0,10):"";
   $("upTime").value=ev?(ev.start||"").slice(11,16):(last?(last.start||"").slice(11,16):"14:00");
   $("upVenue").value=ev?(ev.venue||""):(last&&last.venue||"");
@@ -2573,7 +2574,7 @@ async function renderSessionPage(id){
   let s=null, live=false;
   if(String(id)==="live"){
     if(!(state.session&&state.session.active)){
-      document.title="Dink Donk · "+"Not found";
+      document.title="JV's Open Play · "+"Not found";
       $("sessBody").innerHTML='<div class="hist-empty">No open play running.</div>';
       const c=$("sessContinue"); if(c) c.hidden=true;
       const d=$("sessDelete"); if(d){ d.hidden=true; d.style.display="none"; }
@@ -2585,12 +2586,12 @@ async function renderSessionPage(id){
     s=(state.history||[]).find(h=>String(h.id)===String(id));
   }
   if(!s){
-    document.title="Dink Donk · "+"Not found";
+    document.title="JV's Open Play · "+"Not found";
     $("sessBody").innerHTML='<div class="hist-empty">This open play was removed.</div>';
     const c=$("sessContinue"); if(c) c.hidden=true;
     return;
   }
-  document.title="Dink Donk · "+(s.name||fmtDate(s.endedAt));
+  document.title="JV's Open Play · "+(s.name||fmtDate(s.endedAt));
   const del=$("sessDelete"); if(del){ del.dataset.delhist=live?"":String(s.id); del.hidden=!!live; del.style.display=live?"none":""; }
   const cont=$("sessContinue"); if(cont) cont.hidden=!(live&&isAdmin());   // visitors watch; only admins continue
   const champ=champLabel(s.players);
@@ -2604,7 +2605,7 @@ async function renderSessionPage(id){
   const gl=glList(log, '<div class="hint">'+(live?"No games finished yet.":"No games recorded.")+'</div>', glEdit);
   let photoHtml="", photoN=0;
   const sd=new Date(s.endedAt||s.startedAt||Date.now());
-  const dlBase="dink-donk-"+sd.getFullYear()+"-"+String(sd.getMonth()+1).padStart(2,"0")+"-"+String(sd.getDate()).padStart(2,"0")+"-";
+  const dlBase="jvs-"+sd.getFullYear()+"-"+String(sd.getMonth()+1).padStart(2,"0")+"-"+String(sd.getDate()).padStart(2,"0")+"-";
   const photoCell=(url,pid)=>'<button type="button" class="photo-cell" data-lightbox="'+url+'" data-dlname="'+dlBase+(++photoN)+'.jpg"><img src="'+url+'" alt="" loading="lazy">'
       +(isAdmin()?'<span class="phdel" data-delphoto="'+pid+'" data-sid="'+s.id+'" title="Remove">✕</span>':'')
       +'</button>';
@@ -3328,7 +3329,7 @@ if(!state.theme)state.theme="light";   // new visitors start in light mode; the 
 if(!state.layout||typeof state.layout!=="object") state.layout={};
 try{
   const bm=$("brandMark"); if(bm) bm.title="Build "+APP_BUILD;
-  console.log("Dink Donk Pickleball Club · build "+APP_BUILD);
+  console.log("JV's Open Play · build "+APP_BUILD);
 }catch(e){}
 applyTheme();
 applyLayout();

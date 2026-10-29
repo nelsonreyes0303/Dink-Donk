@@ -1,5 +1,5 @@
 <?php
-/* Dink Donk Pickleball Club — publishing endpoint.
+/* JV's Open Play — publishing endpoint.
  *
  * The website keeps one official record of finished open plays in data/openplays.json and the
  * photos in data/photos/<sessionId>/. The browser app reads the JSON directly; only admins write,
@@ -164,7 +164,7 @@ function fetchPage(string $url): ?string {
   if (!$host) return null;
   $ip = gethostbyname($host);                          // refuse anything that resolves inside the network
   if ($ip !== $host && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) === false) return null;
-  $ua = 'DinkDonkPickleballClub/1.0 (+roster import)';
+  $ua = 'JVsOpenPlay/1.0 (+roster import)';
   if (function_exists('curl_init')) {
     $ch = curl_init($url);
     curl_setopt_array($ch, [
