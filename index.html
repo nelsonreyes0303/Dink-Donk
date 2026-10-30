@@ -811,7 +811,7 @@ window.addEventListener("error",function(e){
     <div class="home-ctas">
       <button type="button" class="btn-accent" id="landingLive" hidden>View live open play</button>
       <button type="button" class="btn-accent" id="landingHistory">Open play history</button>
-      <button type="button" class="btn-accent" id="landingGoCourts" hidden>Open play</button>
+      <button type="button" class="btn-accent" id="landingPlayBtn" hidden>+ Add open play</button>
     </div>
     <p class="home-status" id="landingRoster"></p>
     <p class="home-next" id="landingNext" hidden></p>
@@ -971,7 +971,7 @@ window.addEventListener("error",function(e){
 const KEY="dd_queue_v1";
 let state=migrate(load())||fresh();
 /* ---------- admin PIN + photos ---------- */
-const APP_BUILD="jv-2026-10-30b";                              // hover the header logo to check which copy the browser loaded
+const APP_BUILD="jv-2026-10-30c";                              // hover the header logo to check which copy the browser loaded
 const PIN_KEY="dd_admin_pin_v1";
 const ADMIN_OK="dd_admin_ok";
 let pinMode="unlock";
@@ -985,11 +985,11 @@ function syncAdminUI(){
   document.body.classList.toggle("admin-on", on);
   const nav=$("navAdminBtn"); if(nav) nav.hidden=on;
   const landAdmin=$("landingAdmin");
-  const landGo=$("landingGoCourts");
+  const landGo=$("landingPlayBtn");
   if(landAdmin) landAdmin.hidden=on;
   if(landGo){
     landGo.hidden=!on;
-    landGo.textContent=live?"Continue open play":"Open play";
+    landGo.textContent=live?"Continue open play":"+ Add open play";
   }
   const hap=$("histAdminPlay");
   if(hap){ hap.textContent=on?(live?"Continue open play":"Run manual open play"):"Admin login"; hap.hidden=!on; }   // visitors log in from the club home instead
@@ -2621,6 +2621,15 @@ async function adminLogin(){
   render(); refreshHistoryViews(); syncAdminUI();   // reveal admin controls, stay on this page
   return true;
 }
+/* From the club home an admin schedules a night rather than starting one on the spot: the button
+   opens Add open play on the Upcoming tab, where the Reclub link fills in the rest and a card with
+   its own Start button is what actually begins play. A night already running is simply resumed.
+   Starting one by hand without scheduling it stays on the history page, behind Run manual open play. */
+async function landingPlay(){
+  if(!(await requireAdmin())) return;
+  if(state.session&&state.session.active) return enterAdminPlay();
+  openHistory(); setHistTab("upcoming"); openUpModal(null);
+}
 async function enterAdminPlay(){
   if(!(await requireAdmin())) return;
   hideLanding(); hideHistoryPages();
@@ -3159,7 +3168,7 @@ $("historyBtn").addEventListener("click",openHistory);
 $("playerClose").addEventListener("click",closePlayer);
 $("playerModal").addEventListener("click",e=>{ if(e.target===$("playerModal")) closePlayer(); });
 $("landingAdmin").addEventListener("click",()=>adminLogin());
-if($("landingGoCourts")) $("landingGoCourts").addEventListener("click",()=>enterAdminPlay());
+if($("landingPlayBtn")) $("landingPlayBtn").addEventListener("click",landingPlay);
 if($("landingLive")) $("landingLive").addEventListener("click",openLiveSession);
 $("landingHistory").addEventListener("click",openHistory);
 $("themeBtn").addEventListener("click",()=>{ state.theme=state.theme==="light"?"dark":"light"; save(); applyTheme(); const tb=$("homeThemeBtn"); if(tb) tb.textContent=state.theme==="light"?"☀️":"🌙"; });
