@@ -424,46 +424,28 @@ window.addEventListener("error",function(e){
     filter:drop-shadow(0 10px 22px rgba(0,0,0,.20));animation:kjFloat 6s ease-in-out infinite}
   @keyframes kjFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 
-  /* rally scene */
+  /* court scene — a ball rallying across a court seen from above */
   .kj-rally{display:block;height:clamp(88px,18vh,164px);width:auto;max-width:96%;margin:clamp(14px,3vh,34px) auto 0;overflow:visible}
-  .kj-line{fill:none;stroke:var(--txt);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;opacity:.8}
-  .kj-paddle{fill:var(--accent);stroke:var(--txt);stroke-width:2.6;opacity:.9}
-  .kj-ground{stroke:var(--line);stroke-width:2.4;stroke-linecap:round}
-  .kj-net line{stroke:var(--line);stroke-width:2.2;stroke-linecap:round}
-  .kj-post{stroke:var(--txt)!important;opacity:.55;stroke-width:3.2!important}
-  .kj-tape{stroke:var(--txt)!important;opacity:.7;stroke-width:4!important}
-  .kj-mesh line{stroke-width:1.5;opacity:.75}
-  .kj-shadow{fill:var(--txt);opacity:.10}
+  .kj-court-fill{fill:var(--txt);opacity:.045}
+  .kj-kitchen{fill:var(--accent);opacity:.10}
+  .kj-court{fill:none;stroke:var(--line);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+  .kj-net{stroke:var(--txt);stroke-width:3.4;stroke-linecap:round;opacity:.72}
+  .kj-post{stroke:var(--txt);stroke-width:4.4;stroke-linecap:round;opacity:.45}
+  .kj-trail{fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;opacity:.42;stroke-dasharray:5 9;animation:kjTrail 1.9s linear infinite}
+  @keyframes kjTrail{to{stroke-dashoffset:-28}}
   .kj-ball{fill:var(--accent);stroke:var(--txt);stroke-width:1.6;opacity:.96}
-  .kj-sparks path{fill:var(--accent);opacity:.5;animation:kjTwinkle 3.6s ease-in-out infinite}
+  .kj-sparks path{fill:var(--accent);opacity:.5;animation:kjTwinkle 3.6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 50%}
   .kj-sparks path:nth-child(2){fill:var(--int);animation-delay:1.2s}
   .kj-sparks path:nth-child(3){animation-delay:2.4s}
   @keyframes kjTwinkle{0%,100%{opacity:.18;transform:scale(.82)}50%{opacity:.72;transform:scale(1.1)}}
-  .kj-sparks path{transform-box:fill-box;transform-origin:50% 50%}
 
-  /* ball: straight across, arcing twice per round trip */
+  /* ball: over the net and back, lifting as it crosses */
   .kj-ballx{animation:kjBallX 1.9s cubic-bezier(.42,0,.58,1) infinite alternate}
-  .kj-ball{transform-box:view-box;transform-origin:146px 94px;animation:kjBallY .95s ease-out infinite alternate}
-  @keyframes kjBallX{from{transform:translateX(0)}to{transform:translateX(128px)}}
-  @keyframes kjBallY{from{transform:translateY(5px)}to{transform:translateY(-44px)}}
-
-  /* each player swings as the ball reaches them */
-  .kj-fig{transform-box:view-box;animation:kjBob 1.9s ease-in-out infinite}
-  .kj-fig-l{transform-origin:86px 134px}
-  .kj-fig-r{transform-origin:334px 134px;animation-delay:.95s}
-  @keyframes kjBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-  .kj-arm{transform-box:view-box}
-  .kj-arm-l{transform-origin:86px 80px;animation:kjSwing 3.8s ease-in-out infinite}
-  .kj-arm-r{transform-origin:334px 80px;animation:kjSwing 3.8s ease-in-out infinite;animation-delay:1.9s}
-  @keyframes kjSwing{
-    0%{transform:rotate(24deg)}
-    6%{transform:rotate(-34deg)}
-    16%{transform:rotate(10deg)}
-    45%{transform:rotate(16deg)}
-    100%{transform:rotate(24deg)}
-  }
+  .kj-ball{transform-box:view-box;animation:kjBallY .95s ease-out infinite alternate}
+  @keyframes kjBallX{from{transform:translateX(0)}to{transform:translateX(160px)}}
+  @keyframes kjBallY{from{transform:translateY(16px)}to{transform:translateY(-16px)}}
   @media (prefers-reduced-motion:reduce){
-    .home-logo,.kj-ballx,.kj-ball,.kj-fig,.kj-arm,.kj-sparks path{animation:none}
+    .home-logo,.kj-ballx,.kj-ball,.kj-trail,.kj-sparks path{animation:none}
   }
   .home-hero{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:clamp(20px,4vh,48px) clamp(18px,4vw,40px) clamp(22px,5vh,56px);max-width:960px;width:100%;margin:0 auto;animation:homeIn .7s ease both}
   @media(max-width:719px){
@@ -820,45 +802,26 @@ window.addEventListener("error",function(e){
     <p class="home-status" id="landingRoster"></p>
     <p class="home-next" id="landingNext" hidden></p>
 
-    <svg class="kj-rally" viewBox="0 0 420 152" role="img" aria-label="Two players rallying a pickleball">
+    <svg class="kj-rally" viewBox="0 0 420 152" role="img" aria-label="A pickleball rallying across a court">
       <g class="kj-sparks">
-        <path d="M28 44 l3.2 8.4 8.4 3.2 -8.4 3.2 -3.2 8.4 -3.2 -8.4 -8.4 -3.2 8.4 -3.2z"/>
-        <path d="M396 62 l2.6 6.8 6.8 2.6 -6.8 2.6 -2.6 6.8 -2.6 -6.8 -6.8 -2.6 6.8 -2.6z"/>
-        <path d="M210 26 l2.2 5.8 5.8 2.2 -5.8 2.2 -2.2 5.8 -2.2 -5.8 -5.8 -2.2 5.8 -2.2z"/>
+        <path d="M26 36 l3.2 8.4 8.4 3.2 -8.4 3.2 -3.2 8.4 -3.2 -8.4 -8.4 -3.2 8.4 -3.2z"/>
+        <path d="M398 112 l2.6 6.8 6.8 2.6 -6.8 2.6 -2.6 6.8 -2.6 -6.8 -6.8 -2.6 6.8 -2.6z"/>
+        <path d="M330 8 l2.2 5.8 5.8 2.2 -5.8 2.2 -2.2 5.8 -2.2 -5.8 -5.8 -2.2 5.8 -2.2z"/>
       </g>
-      <ellipse class="kj-shadow" cx="86" cy="136" rx="30" ry="4.5"/>
-      <ellipse class="kj-shadow" cx="334" cy="136" rx="30" ry="4.5"/>
-      <line class="kj-ground" x1="10" y1="136" x2="410" y2="136"/>
-      <g class="kj-net">
-        <line class="kj-post" x1="186" y1="136" x2="186" y2="84"/>
-        <line class="kj-post" x1="234" y1="136" x2="234" y2="84"/>
-        <line class="kj-tape" x1="184" y1="84" x2="236" y2="84"/>
-        <g class="kj-mesh">
-          <line x1="198" y1="86" x2="198" y2="136"/><line x1="210" y1="86" x2="210" y2="136"/><line x1="222" y1="86" x2="222" y2="136"/>
-          <line x1="186" y1="98" x2="234" y2="98"/><line x1="186" y1="112" x2="234" y2="112"/><line x1="186" y1="126" x2="234" y2="126"/>
-        </g>
+      <rect class="kj-court-fill" x="56" y="18" width="308" height="116" rx="4"/>
+      <rect class="kj-kitchen" x="164" y="18" width="92" height="116"/>
+      <g class="kj-court">
+        <rect x="56" y="18" width="308" height="116" rx="4"/>
+        <line x1="164" y1="18" x2="164" y2="134"/>
+        <line x1="256" y1="18" x2="256" y2="134"/>
+        <line x1="56" y1="76" x2="164" y2="76"/>
+        <line x1="256" y1="76" x2="364" y2="76"/>
       </g>
-      <g class="kj-fig kj-fig-l">
-        <circle class="kj-line" cx="86" cy="56" r="10"/>
-        <path class="kj-line" d="M86 66 V104"/>
-        <path class="kj-line" d="M86 104 L72 133"/><path class="kj-line" d="M86 104 L101 133"/>
-        <path class="kj-line" d="M86 80 L68 96"/>
-        <g class="kj-arm kj-arm-l">
-          <path class="kj-line" d="M86 80 L118 88"/>
-          <ellipse class="kj-paddle" cx="130" cy="91" rx="10" ry="12.5" transform="rotate(-20 130 91)"/>
-        </g>
-      </g>
-      <g class="kj-fig kj-fig-r">
-        <circle class="kj-line" cx="334" cy="56" r="10"/>
-        <path class="kj-line" d="M334 66 V104"/>
-        <path class="kj-line" d="M334 104 L319 133"/><path class="kj-line" d="M334 104 L348 133"/>
-        <path class="kj-line" d="M334 80 L352 96"/>
-        <g class="kj-arm kj-arm-r">
-          <path class="kj-line" d="M334 80 L302 88"/>
-          <ellipse class="kj-paddle" cx="290" cy="91" rx="10" ry="12.5" transform="rotate(20 290 91)"/>
-        </g>
-      </g>
-      <g class="kj-ballx"><circle class="kj-ball" cx="146" cy="94" r="6"/></g>
+      <path class="kj-trail" d="M130 92 Q210 28 290 92"/>
+      <line class="kj-post" x1="210" y1="10" x2="210" y2="20"/>
+      <line class="kj-post" x1="210" y1="132" x2="210" y2="142"/>
+      <line class="kj-net" x1="210" y1="14" x2="210" y2="138"/>
+      <g class="kj-ballx"><circle class="kj-ball" cx="130" cy="76" r="6.5"/></g>
     </svg>
   </div>
   <button type="button" class="home-adminlink" id="landingAdmin" title="Admin sign in">Admin login</button>
@@ -871,8 +834,6 @@ window.addEventListener("error",function(e){
     <h1>Open play history</h1>
     <div class="spacer"></div>
     <button type="button" class="btn btn-sm" id="histAdminPlay">Admin login</button>
-    <button type="button" class="btn-ghost btn-sm admin-only" data-backup title="Download everything — roster, open play history, photos — as one file">💾 Backup</button>
-    <label class="btn-ghost btn-sm admin-only" title="Load a backup file made on another device" style="cursor:pointer">📥 Import<input type="file" accept="application/json,.json" data-restore style="display:none"></label>
     <button type="button" class="btn-ghost btn-sm admin-only" id="histLockBtn" title="Lock admin on this device">Log out</button>
   </div>
   <div class="page-body">
@@ -996,7 +957,7 @@ window.addEventListener("error",function(e){
 const KEY="dd_queue_v1";
 let state=migrate(load())||fresh();
 /* ---------- admin PIN + photos ---------- */
-const APP_BUILD="jv-2026-10-29a";                              // hover the header logo to check which copy the browser loaded
+const APP_BUILD="jv-2026-10-30a";                              // hover the header logo to check which copy the browser loaded
 const PIN_KEY="dd_admin_pin_v1";
 const ADMIN_OK="dd_admin_ok";
 let pinMode="unlock";
@@ -1017,7 +978,7 @@ function syncAdminUI(){
     landGo.textContent=live?"Continue open play":"Open courts";
   }
   const hap=$("histAdminPlay");
-  if(hap){ hap.textContent=on?(live?"Continue open play":"Run open play"):"Admin login"; hap.hidden=!on; }   // visitors log in from the club home instead
+  if(hap){ hap.textContent=on?(live?"Continue open play":"Run manual open play"):"Admin login"; hap.hidden=!on; }   // visitors log in from the club home instead
   const sc=$("sessContinue");
   const sa=$("sessAdminLogin");
   const viewingLive=String(viewingSessionId)==="live" && live;
