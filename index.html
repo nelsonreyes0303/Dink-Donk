@@ -138,6 +138,11 @@ window.addEventListener("error",function(e){
       padding:36px 48px;
     }
   }
+  /* Big screens (large monitors, a TV showing the board across the hall): type is sized in
+     rem almost everywhere, so lifting the root size scales the whole app in one step. */
+  @media(min-width:1800px){ :root{font-size:18px} }
+  @media(min-width:2400px){ :root{font-size:21px} }
+  @media(min-width:3200px){ :root{font-size:25px} }
 
   .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
   .card h2{margin:0;padding:15px 18px;font-size:1rem;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px}
@@ -286,6 +291,15 @@ window.addEventListener("error",function(e){
     .lowgrid > .split-v{display:block;position:relative;width:10px;align-self:stretch;min-height:120px}
   }
   .board-wrap{grid-column:1/-1}
+  /* narrow screens: let the lower grid shrink, and keep the live board inside its card
+     instead of letting an 8-column table widen the whole page */
+  .lowgrid>*{min-width:0}
+  #board{overflow-x:auto;overscroll-behavior-x:contain}
+  @media(max-width:719px){
+    #board .lb{font-size:.82rem}
+    #board .lb th,#board .lb td{padding:8px 6px}
+    #board .lb td.rank{width:34px;font-size:.9rem}
+  }
   .lb{width:100%;border-collapse:collapse;font-size:.9rem}
   .lb th{font-size:.66rem;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);text-align:right;padding:10px 12px;border-bottom:1px solid var(--line);font-weight:700}
   .lb th:nth-child(1),.lb th:nth-child(2),.lb th:nth-child(3){text-align:left}
@@ -797,7 +811,7 @@ window.addEventListener("error",function(e){
     <div class="home-ctas">
       <button type="button" class="btn-accent" id="landingLive" hidden>View live open play</button>
       <button type="button" class="btn-accent" id="landingHistory">Open play history</button>
-      <button type="button" class="btn-accent" id="landingGoCourts" hidden>Open courts</button>
+      <button type="button" class="btn-accent" id="landingGoCourts" hidden>Open play</button>
     </div>
     <p class="home-status" id="landingRoster"></p>
     <p class="home-next" id="landingNext" hidden></p>
@@ -957,7 +971,7 @@ window.addEventListener("error",function(e){
 const KEY="dd_queue_v1";
 let state=migrate(load())||fresh();
 /* ---------- admin PIN + photos ---------- */
-const APP_BUILD="jv-2026-10-30a";                              // hover the header logo to check which copy the browser loaded
+const APP_BUILD="jv-2026-10-30b";                              // hover the header logo to check which copy the browser loaded
 const PIN_KEY="dd_admin_pin_v1";
 const ADMIN_OK="dd_admin_ok";
 let pinMode="unlock";
@@ -975,7 +989,7 @@ function syncAdminUI(){
   if(landAdmin) landAdmin.hidden=on;
   if(landGo){
     landGo.hidden=!on;
-    landGo.textContent=live?"Continue open play":"Open courts";
+    landGo.textContent=live?"Continue open play":"Open play";
   }
   const hap=$("histAdminPlay");
   if(hap){ hap.textContent=on?(live?"Continue open play":"Run manual open play"):"Admin login"; hap.hidden=!on; }   // visitors log in from the club home instead
